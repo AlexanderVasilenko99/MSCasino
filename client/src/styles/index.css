@@ -1,0 +1,287 @@
+/* ─── Variables ─────────────────────────────────────────────── */
+:root {
+  --color-bg: #0d0d0d;
+  --color-surface: #1a1a1a;
+  --color-surface-raised: #242424;
+  --color-border: #2e2e2e;
+  --color-gold: #c9a84c;
+  --color-gold-light: #e8c97a;
+  --color-text: #f0ede6;
+  --color-muted: #666;
+  --color-win: #27ae60;
+  --color-loss: #c0392b;
+  --color-error: #e74c3c;
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --transition: 0.2s ease;
+
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── App shell ─────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+.app__header {
+  text-align: center;
+}
+
+.app__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+  text-shadow: 0 0 30px rgba(201, 168, 76, 0.4);
+}
+
+.app__subtitle {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* ─── Slot machine ──────────────────────────────────────────── */
+.slot-machine {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Credits ───────────────────────────────────────────────── */
+.slot-machine__credits {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.credits__label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--color-muted);
+}
+
+.credits__value {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--color-gold);
+  min-width: 3ch;
+  text-align: center;
+}
+
+/* ─── Reels ─────────────────────────────────────────────────── */
+.slot-machine__reels {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ─── Individual slot block ─────────────────────────────────── */
+.slot-block {
+  width: 90px;
+  height: 110px;
+  background: var(--color-surface-raised);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.slot-block--spinning {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.25);
+}
+
+.slot-block--revealed {
+  animation: reveal 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slot-block__letter {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-muted);
+}
+
+.slot-block--spinning .slot-block__letter {
+  color: var(--color-gold);
+  animation: spin-char 0.18s steps(1) infinite;
+}
+
+.slot-block__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* ─── Message ───────────────────────────────────────────────── */
+.slot-machine__message {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-sm);
+  animation: fade-in 0.3s ease;
+}
+
+.slot-machine__message--win {
+  background: rgba(39, 174, 96, 0.15);
+  color: var(--color-win);
+  border: 1px solid rgba(39, 174, 96, 0.3);
+}
+
+.slot-machine__message--loss {
+  background: rgba(192, 57, 43, 0.1);
+  color: #c0392b;
+  border: 1px solid rgba(192, 57, 43, 0.2);
+}
+
+.slot-machine__message--error {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--color-error);
+  border: 1px solid rgba(231, 76, 60, 0.25);
+}
+
+/* ─── Controls ──────────────────────────────────────────────── */
+.slot-machine__controls {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.slot-machine__broke {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+.btn {
+  flex: 1;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: transform var(--transition), opacity var(--transition), box-shadow var(--transition);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  background: var(--color-gold);
+  color: #0d0d0d;
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.25);
+}
+
+.btn--primary:not(:disabled):hover {
+  background: var(--color-gold-light);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn--secondary:not(:disabled):hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* ─── Misc ──────────────────────────────────────────────────── */
+.status-text {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────── */
+@keyframes spin-char {
+  0%   { content: 'X'; opacity: 1; }
+  25%  { opacity: 0.4; }
+  50%  { opacity: 1; }
+  75%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.slot-block--spinning .slot-block__letter {
+  animation: spin-flicker 0.15s ease-in-out infinite alternate;
+}
+
+@keyframes spin-flicker {
+  from { opacity: 1; transform: scaleY(1); }
+  to   { opacity: 0.3; transform: scaleY(0.85); }
+}
+
+@keyframes reveal {
+  0%   { transform: scale(0.85) translateY(6px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
