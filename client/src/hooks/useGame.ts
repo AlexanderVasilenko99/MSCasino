@@ -30,7 +30,7 @@ const INITIAL_STATE: GameState = {
   error: null,
 };
 
-export function useGame() {
+export function useGame({ enabled }: { enabled: boolean }) {
   const [state, setState] = useState<GameState>(INITIAL_STATE);
   const revealTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -50,8 +50,18 @@ export function useGame() {
     }
   }, []);
 
-  // On mount: restore or create session
+  // Reset state when user logs out (enabled goes false)
   useEffect(() => {
+    if (!enabled) {
+      clearRevealTimers();
+      setState(INITIAL_STATE);
+    }
+  }, [enabled]);
+
+  // On mount / when enabled: restore or create session
+  useEffect(() => {
+    if (!enabled) return;
+
     const saved = sessionStorage.getItem(SESSION_KEY);
 
     if (!saved) {
@@ -68,7 +78,7 @@ export function useGame() {
         sessionStorage.removeItem(SESSION_KEY);
         startSession();
       });
-  }, [startSession]);
+  }, [enabled, startSession]);
 
   const spin = useCallback(async () => {
     if (!state.sessionId || state.phase !== 'ready') return;

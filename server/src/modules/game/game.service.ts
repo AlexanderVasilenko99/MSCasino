@@ -1,6 +1,7 @@
 import { SpinResult } from '@casino/shared';
 import { AppError } from '../../middleware/errorHandler';
 import * as sessionService from '../session/session.service';
+import * as userService from '../user/user.service';
 import * as logic from './game.logic';
 
 export async function spin(sessionId: string): Promise<SpinResult> {
@@ -25,7 +26,10 @@ export async function spin(sessionId: string): Promise<SpinResult> {
   return { symbols, isWin: won, reward, creditsAfter };
 }
 
-export async function cashOut(sessionId: string): Promise<{ creditsCollected: number }> {
+export async function cashOut(
+  sessionId: string,
+): Promise<{ creditsCollected: number; newAccountBalance: number }> {
   const session = await sessionService.closeSession(sessionId);
-  return { creditsCollected: session.credits };
+  const newAccountBalance = await userService.creditBalance(session.userId, session.credits);
+  return { creditsCollected: session.credits, newAccountBalance };
 }

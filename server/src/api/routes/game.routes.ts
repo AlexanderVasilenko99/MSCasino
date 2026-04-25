@@ -13,6 +13,7 @@ router.post('/cashout', validateSession, async (req: Request, res: Response) => 
   const result = await gameService.cashOut(req.params.sessionId);
   res.json({
     creditsCollected: result.creditsCollected,
+    newAccountBalance: result.newAccountBalance,
     message: `Cashed out ${result.creditsCollected} credits. Thanks for playing!`,
   });
 });

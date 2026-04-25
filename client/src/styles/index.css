@@ -251,6 +251,112 @@ body {
   color: var(--color-gold);
 }
 
+.btn--ghost {
+  background: transparent;
+  color: var(--color-muted);
+  border: none;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.75rem;
+}
+
+.btn--ghost:not(:disabled):hover {
+  color: var(--color-text);
+  transform: none;
+}
+
+.btn--sm {
+  flex: none;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* ─── User bar ──────────────────────────────────────────────── */
+.app__user-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.app__username {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.app__account {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--color-text);
+  letter-spacing: 0.05em;
+}
+
+.app__account strong {
+  color: var(--color-gold);
+}
+
+/* ─── Auth form ─────────────────────────────────────────────── */
+.auth-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.auth-form__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-gold);
+}
+
+.auth-form__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.auth-form__error {
+  font-size: 0.8rem;
+  color: var(--color-error);
+  text-align: center;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.auth-input:focus {
+  border-color: var(--color-gold);
+}
+
+.auth-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ─── Misc ──────────────────────────────────────────────────── */
 .status-text {
   color: var(--color-muted);

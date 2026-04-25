@@ -37,6 +37,18 @@ export interface CreateSessionResponse {
 export interface CashOutResponse {
   creditsCollected: number;
   message: string;
+  newAccountBalance: number;
+}
+
+export interface AuthResponse {
+  token: string;
+  username: string;
+  accountBalance: number;
+}
+
+export interface MeResponse {
+  username: string;
+  accountBalance: number;
 }
 
 export interface ApiError {
