@@ -28,8 +28,9 @@ export async function spin(sessionId: string): Promise<SpinResult> {
 
 export async function cashOut(
   sessionId: string,
+  userId: string,
 ): Promise<{ creditsCollected: number; newAccountBalance: number }> {
   const session = await sessionService.closeSession(sessionId);
-  const newAccountBalance = await userService.creditBalance(session.userId, session.credits);
+  const newAccountBalance = await userService.creditBalance(userId, session.credits);
   return { creditsCollected: session.credits, newAccountBalance };
 }

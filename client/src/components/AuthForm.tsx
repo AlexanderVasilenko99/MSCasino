@@ -28,7 +28,7 @@ export default function AuthForm({ onLogin, onRegister, error, isLoading }: Auth
   return (
     <div className="auth-form">
       <h2 className="auth-form__title">
-        {mode === 'login' ? 'Sign In to Play' : 'Create Account'}
+        {mode === 'login' ? 'Sign In to cash out' : 'Create Account'}
       </h2>
 
       <form onSubmit={handleSubmit} className="auth-form__body">

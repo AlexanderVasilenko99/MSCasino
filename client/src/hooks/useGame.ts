@@ -30,7 +30,7 @@ const INITIAL_STATE: GameState = {
   error: null,
 };
 
-export function useGame({ enabled }: { enabled: boolean }) {
+export function useGame() {
   const [state, setState] = useState<GameState>(INITIAL_STATE);
   const revealTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -40,7 +40,7 @@ export function useGame({ enabled }: { enabled: boolean }) {
   };
 
   const startSession = useCallback(async () => {
-    setState((s) => ({ ...s, phase: 'loading', error: null }));
+    setState((s) => ({ ...s, phase: 'loading', error: null, message: null }));
     try {
       const { sessionId, credits } = await gameApi.createSession();
       sessionStorage.setItem(SESSION_KEY, sessionId);
@@ -50,18 +50,8 @@ export function useGame({ enabled }: { enabled: boolean }) {
     }
   }, []);
 
-  // Reset state when user logs out (enabled goes false)
+  // On mount: restore or create session
   useEffect(() => {
-    if (!enabled) {
-      clearRevealTimers();
-      setState(INITIAL_STATE);
-    }
-  }, [enabled]);
-
-  // On mount / when enabled: restore or create session
-  useEffect(() => {
-    if (!enabled) return;
-
     const saved = sessionStorage.getItem(SESSION_KEY);
 
     if (!saved) {
@@ -78,7 +68,7 @@ export function useGame({ enabled }: { enabled: boolean }) {
         sessionStorage.removeItem(SESSION_KEY);
         startSession();
       });
-  }, [enabled, startSession]);
+  }, [startSession]);
 
   const spin = useCallback(async () => {
     if (!state.sessionId || state.phase !== 'ready') return;

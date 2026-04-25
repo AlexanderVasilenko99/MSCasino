@@ -7,7 +7,6 @@ import { STARTING_CREDITS } from '@casino/shared';
 
 export interface ActiveSession {
   sessionId: string;
-  userId: string;
   credits: number;
   totalSpins: number;
   createdAt: string;
@@ -17,10 +16,9 @@ function sessionKey(sessionId: string): string {
   return `session:${sessionId}`;
 }
 
-export async function createSession(userId: string): Promise<ActiveSession> {
+export async function createSession(): Promise<ActiveSession> {
   const session: ActiveSession = {
     sessionId: uuidv4(),
-    userId,
     credits: STARTING_CREDITS,
     totalSpins: 0,
     createdAt: new Date().toISOString(),

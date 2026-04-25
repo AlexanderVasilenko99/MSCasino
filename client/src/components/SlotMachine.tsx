@@ -86,6 +86,10 @@ export default function SlotMachine({ state, onSpin, onCashOut, onNewGame }: Slo
       {isBroke && (
         <p className="slot-machine__broke">No credits remaining.</p>
       )}
+
+      {isCashedOut && (
+        <p className="slot-machine__broke">You have been signed out.</p>
+      )}
     </div>
   );
 }
