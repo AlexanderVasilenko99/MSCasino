@@ -12,8 +12,7 @@ export default function App() {
   const [cashOutPending, setCashOutPending] = useState(false);
   const doCashOut = useCallback(async () => {
     await cashOut();
-    await auth.refreshBalance();
-  }, [cashOut, auth.refreshBalance]);
+  }, [cashOut]);
 
   // Once the user logs in while a cash-out is pending, execute it
   useEffect(() => {
@@ -29,7 +28,7 @@ export default function App() {
     if (state.phase === 'cashed_out' && auth.isLoggedIn) {
       auth.logout();
     }
-  }, [state.phase, auth.isLoggedIn]);
+  }, [state.phase, auth.isLoggedIn, auth.logout]);
 
   const handleCashOut = () => {
     if (auth.isLoggedIn) {
@@ -44,20 +43,7 @@ export default function App() {
     <div className="app">
       <header className="app__header">
         <h1 className="app__title">MS CASINO Jackpot</h1>
-
-        {auth.isLoggedIn ? (
-          <div className="app__user-bar">
-            <span className="app__username">{auth.username}</span>
-            <span className="app__account">
-              Account: <strong>{auth.accountBalance}</strong> credits
-            </span>
-            <button className="btn btn--ghost btn--sm" onClick={auth.logout}>
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <p className="app__subtitle">Definitely not rigged, By Alex.</p>
-        )}
+        <p className="app__subtitle">Definitely not rigged, By Alex.</p>
       </header>
 
       <main className="app__main">

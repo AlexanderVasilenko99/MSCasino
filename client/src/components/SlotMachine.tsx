@@ -1,15 +1,5 @@
 import SlotBlock from './SlotBlock';
-import { SlotSymbol } from '@casino/shared';
-
-interface GameState {
-  phase: string;
-  credits: number;
-  symbols: [SlotSymbol | null, SlotSymbol | null, SlotSymbol | null];
-  revealedCount: number;
-  isWin: boolean | null;
-  message: string | null;
-  error: string | null;
-}
+import { GameState } from '../hooks/useGame';
 
 interface SlotMachineProps {
   state: GameState;

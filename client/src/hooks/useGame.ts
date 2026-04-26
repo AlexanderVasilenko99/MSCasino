@@ -6,9 +6,9 @@ const SESSION_KEY = 'casino_session_id';
 
 const REVEAL_DELAY_MS = 1000;
 
-type GamePhase = 'loading' | 'ready' | 'spinning' | 'revealing' | 'cashed_out' | 'broke';
+export type GamePhase = 'loading' | 'ready' | 'spinning' | 'revealing' | 'cashed_out' | 'broke';
 
-interface GameState {
+export interface GameState {
   phase: GamePhase;
   sessionId: string | null;
   credits: number;

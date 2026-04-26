@@ -8,7 +8,7 @@ import {
 } from '@casino/shared';
 
 const BASE = '/api';
-const TOKEN_KEY = 'casino_token';
+export const TOKEN_KEY = 'casino_token';
 
 function getAuthHeaders(): Record<string, string> {
   const token = localStorage.getItem(TOKEN_KEY);

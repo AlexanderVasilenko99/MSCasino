@@ -1,12 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
-import { gameApi } from '../api/gameApi';
-
-const TOKEN_KEY = 'casino_token';
+import { gameApi, TOKEN_KEY } from '../api/gameApi';
 
 interface AuthState {
   token: string | null;
   username: string | null;
-  accountBalance: number;
   isLoading: boolean;
   error: string | null;
 }
@@ -14,7 +11,6 @@ interface AuthState {
 const INITIAL_STATE: AuthState = {
   token: null,
   username: null,
-  accountBalance: 0,
   isLoading: true,
   error: null,
 };
@@ -32,21 +28,21 @@ export function useAuth() {
 
     gameApi
       .me()
-      .then(({ username, accountBalance }) => {
-        setState({ token, username, accountBalance, isLoading: false, error: null });
+      .then(({ username }) => {
+        setState({ token, username, isLoading: false, error: null });
       })
       .catch(() => {
         localStorage.removeItem(TOKEN_KEY);
-        setState({ token: null, username: null, accountBalance: 0, isLoading: false, error: null });
+        setState({ token: null, username: null, isLoading: false, error: null });
       });
   }, []);
 
   const login = useCallback(async (username: string, password: string) => {
     setState((s) => ({ ...s, isLoading: true, error: null }));
     try {
-      const { token, username: name, accountBalance } = await gameApi.login(username, password);
+      const { token, username: name } = await gameApi.login(username, password);
       localStorage.setItem(TOKEN_KEY, token);
-      setState({ token, username: name, accountBalance, isLoading: false, error: null });
+      setState({ token, username: name, isLoading: false, error: null });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed.';
       setState((s) => ({ ...s, isLoading: false, error: message }));
@@ -56,9 +52,9 @@ export function useAuth() {
   const register = useCallback(async (username: string, password: string) => {
     setState((s) => ({ ...s, isLoading: true, error: null }));
     try {
-      const { token, username: name, accountBalance } = await gameApi.register(username, password);
+      const { token, username: name } = await gameApi.register(username, password);
       localStorage.setItem(TOKEN_KEY, token);
-      setState({ token, username: name, accountBalance, isLoading: false, error: null });
+      setState({ token, username: name, isLoading: false, error: null });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Registration failed.';
       setState((s) => ({ ...s, isLoading: false, error: message }));
@@ -68,16 +64,7 @@ export function useAuth() {
   const logout = useCallback(() => {
     localStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem('casino_session_id');
-    setState({ token: null, username: null, accountBalance: 0, isLoading: false, error: null });
-  }, []);
-
-  const refreshBalance = useCallback(async () => {
-    try {
-      const { accountBalance } = await gameApi.me();
-      setState((s) => ({ ...s, accountBalance }));
-    } catch {
-      // silently ignore — balance will refresh on next login
-    }
+    setState({ token: null, username: null, isLoading: false, error: null });
   }, []);
 
   return {
@@ -86,6 +73,5 @@ export function useAuth() {
     login,
     register,
     logout,
-    refreshBalance,
   };
 }

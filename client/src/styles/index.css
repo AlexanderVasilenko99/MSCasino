@@ -311,17 +311,6 @@ body {
   color: var(--color-muted);
 }
 
-.app__account {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  color: var(--color-text);
-  letter-spacing: 0.05em;
-}
-
-.app__account strong {
-  color: var(--color-gold);
-}
-
 /* ─── Auth form ─────────────────────────────────────────────── */
 .auth-form {
   background: var(--color-surface);
