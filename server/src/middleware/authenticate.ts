@@ -12,6 +12,14 @@ declare global {
   }
 }
 
+/**
+ * Express middleware that enforces JWT authentication.
+ * Purpose: protect routes that require a known user identity (e.g. cash-out).
+ * Reads the Bearer token from the Authorization header, verifies it against
+ * the JWT secret, and attaches the decoded payload to req.user so downstream
+ * handlers can access the userId and username without re-querying the database.
+ * Passes a 401 error to next() if the header is missing or the token is invalid.
+ */
 export function authenticate(req: Request, _res: Response, next: NextFunction): void {
   const header = req.headers.authorization;
   if (!header?.startsWith('Bearer ')) {

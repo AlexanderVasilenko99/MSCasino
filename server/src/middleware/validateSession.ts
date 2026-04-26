@@ -9,6 +9,13 @@ declare global {
   }
 }
 
+/**
+ * Express middleware that loads and validates the active game session.
+ * Purpose: centralise session lookup so game route handlers receive a
+ * ready-to-use session object on req.gameSession rather than each fetching
+ * it individually. Automatically throws 404 (via getSession) if the session
+ * ID in the URL does not exist or has expired in Redis.
+ */
 export async function validateSession(
   req: Request,
   _res: Response,
