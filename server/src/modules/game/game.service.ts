@@ -6,9 +6,6 @@ import * as logic from './game.logic';
 
 /**
  * Executes a single spin for the given session.
- * Purpose: orchestrate the full spin lifecycle — validate the player has
- * credits, generate a result, apply house cheat logic, update the session,
- * and return the outcome to the caller.
  * Throws 400 if the session has fewer than 1 credit remaining.
  */
 export async function spin(sessionId: string): Promise<SpinResult> {
@@ -35,8 +32,8 @@ export async function spin(sessionId: string): Promise<SpinResult> {
 
 /**
  * Closes the session and transfers the remaining credits to the user's account.
- * Purpose: finalise the game — archive the session to MongoDB, remove it from
- * Redis, and atomically increment the user's persistent account balance by the
+ * Finalise the game, archive the session to Mongo, remove it from Redis, and
+ * atomically increment the user's persistent account balance by the
  * amount of credits they had when they cashed out.
  * Returns the number of credits collected and the user's new total balance.
  */

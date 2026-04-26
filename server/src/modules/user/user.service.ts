@@ -14,7 +14,7 @@ export interface UserPayload {
 /**
  * Signs a JWT containing the user's ID and username.
  * Purpose: create a compact, stateless token the client can store and send
- * with subsequent requests to prove identity. Tokens expire after 7 days.
+ * with subsequent requests to prove identity.
  */
 function signToken(payload: UserPayload): string {
   return jwt.sign(payload, config.jwtSecret, { expiresIn: '7d' });
@@ -71,7 +71,7 @@ export async function login(
  * Fetches a user document by MongoDB ID.
  * Purpose: retrieve the full user record (e.g. to read the current account
  * balance) after the JWT has already identified them.
- * Throws 404 if no user with that ID exists.
+ * 404 if no user with that ID exists.
  */
 export async function getUser(userId: string): Promise<IUser> {
   const user = await UserModel.findById(userId);

@@ -21,7 +21,7 @@ function sessionKey(sessionId: string): string {
  * Creates a new anonymous game session and stores it in Redis.
  * Purpose: give a player a fresh slate — 10 starting credits, zero spins,
  * and a UUID that acts as their session token for all subsequent requests.
- * The session expires automatically after the configured TTL (default 24 h).
+ * The session expires automatically after the TTL (24h).
  */
 export async function createSession(): Promise<ActiveSession> {
   const session: ActiveSession = {
@@ -77,11 +77,10 @@ export async function updateSession(
 }
 
 /**
- * Permanently closes a session — archives it to MongoDB and removes it from Redis.
+ * Permanently closes a session. Archives it to Mongo and removes it from Redis.
  * Purpose: record a permanent, auditable history of the session's outcome
- * (start/final credits, total spins) and free the Redis slot. Called at
- * cash-out. Returns the final session state so the caller can use the credit
- * balance before it is gone.
+ * [start & final credits, total spins], and free the Redis slot. Called at
+ * cash-out.
  */
 export async function closeSession(sessionId: string): Promise<ActiveSession> {
   const session = await getSession(sessionId);

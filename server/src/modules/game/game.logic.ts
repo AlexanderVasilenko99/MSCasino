@@ -46,8 +46,7 @@ export function rerollChance(credits: number): number {
 }
 
 /**
- * Applies house cheating logic to a completed spin.
- * Purpose: ensure the house always has an edge when a player is winning.
+ * Applies house cheating logic to each completed spin.
  * If the spin is a win and a random roll falls within the cheat threshold,
  * the result is silently replaced with a fresh random spin. The re-rolled
  * result is final regardless of whether it is also a win.

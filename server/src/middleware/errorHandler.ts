@@ -19,9 +19,9 @@ export class AppError extends Error {
 /**
  * Global Express error-handling middleware.
  * Purpose: provide a single, consistent place where all errors are caught and
- * serialised into JSON responses. Known AppErrors are returned with their
- * intended status code; everything else is treated as an unexpected server
- * fault and logged before returning a generic 500.
+ * serialised into JSON responses.
+ * Known AppErrors are returned with their intended status code. Everything
+ * else is treated as an unexpected server fault and logged before returning a generic 500.
  */
 export function errorHandler(
   err: Error,
