@@ -25,8 +25,7 @@ router.post('/cashout', authenticate, validateSession, async (req: Request, res:
   res.json({
     creditsCollected: result.creditsCollected,
     newAccountBalance: result.newAccountBalance,
-    message: `Cashed out ${result.creditsCollected} credits.
-    Your Balance is now ${result.newAccountBalance}. Thanks for playing!`,
+    message: `Cashed out ${result.creditsCollected} credits. Your Balance is now ${result.newAccountBalance}. Thanks for playing!`,
   });
 });
 
