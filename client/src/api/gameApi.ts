@@ -4,7 +4,6 @@ import {
   SessionState,
   CashOutResponse,
   AuthResponse,
-  MeResponse,
 } from '@casino/shared';
 
 const BASE = '/api';
@@ -42,8 +41,6 @@ export const gameApi = {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     }),
-
-  me: () => request<MeResponse>(`${BASE}/auth/me`),
 
   createSession: () =>
     request<CreateSessionResponse>(`${BASE}/session`, { method: 'POST' }),

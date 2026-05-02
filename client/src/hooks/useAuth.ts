@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { gameApi, TOKEN_KEY } from '../api/gameApi';
 
 interface AuthState {
@@ -11,31 +11,12 @@ interface AuthState {
 const INITIAL_STATE: AuthState = {
   token: null,
   username: null,
-  isLoading: true,
+  isLoading: false,
   error: null,
 };
 
 export function useAuth() {
   const [state, setState] = useState<AuthState>(INITIAL_STATE);
-
-  // On mount: validate stored token by fetching /me
-  useEffect(() => {
-    const token = localStorage.getItem(TOKEN_KEY);
-    if (!token) {
-      setState((s) => ({ ...s, isLoading: false }));
-      return;
-    }
-
-    gameApi
-      .me()
-      .then(({ username }) => {
-        setState({ token, username, isLoading: false, error: null });
-      })
-      .catch(() => {
-        localStorage.removeItem(TOKEN_KEY);
-        setState({ token: null, username: null, isLoading: false, error: null });
-      });
-  }, []);
 
   const login = useCallback(async (username: string, password: string) => {
     setState((s) => ({ ...s, isLoading: true, error: null }));

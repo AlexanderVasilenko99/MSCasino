@@ -46,11 +46,6 @@ export interface AuthResponse {
   accountBalance: number;
 }
 
-export interface MeResponse {
-  username: string;
-  accountBalance: number;
-}
-
 export interface ApiError {
   error: string;
   message: string;
