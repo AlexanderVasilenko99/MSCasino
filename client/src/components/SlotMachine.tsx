@@ -24,19 +24,24 @@ export default function SlotMachine({ state, onSpin, onCashOut, onNewGame }: Slo
         <span className="credits__value">{credits}</span>
       </div>
 
-      <div className="slot-machine__reels">
-        {([0, 1, 2] as const).map((i) => {
-          const blockSpinning = isSpinning || (isRevealing && revealedCount <= i);
-          const revealedSymbol = isSpinning ? null : revealedCount > i ? symbols[i] : null;
-          return (
-            <SlotBlock
-              key={i}
-              symbol={revealedSymbol}
-              isSpinning={blockSpinning}
-            />
-          );
-        })}
-      </div>
+      <table className="slot-machine__reels">
+        <tbody>
+          <tr>
+            {([0, 1, 2] as const).map((i) => {
+              const blockSpinning = isSpinning || (isRevealing && revealedCount <= i);
+              const revealedSymbol = isSpinning ? null : revealedCount > i ? symbols[i] : null;
+              return (
+                <td key={i} className='slot-machine__block'>
+                  <SlotBlock
+                    symbol={revealedSymbol}
+                    isSpinning={blockSpinning}
+                  />
+                </td>
+              );
+            })}
+          </tr>
+        </tbody>
+      </table>
 
       {(message || error) && (
         <div
