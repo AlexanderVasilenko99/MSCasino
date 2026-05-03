@@ -141,12 +141,23 @@ npm install
 
 ### 4. Start the app
 
+**Development** — two servers with hot reload:
+
 ```bash
 npm run dev
 ```
 
 - **Client** → http://localhost:5173
-- **Server** → http://localhost:3001
+- **API** → http://localhost:3001
+
+**Production** — build once, then run a single server:
+
+```bash
+npm run build
+npm start
+```
+
+- **App** → http://localhost:3001 (Express serves the built client and the API)
 
 ---
 
