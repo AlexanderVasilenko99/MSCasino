@@ -131,7 +131,7 @@ Starts MongoDB on port `27017` and Redis on port `6379`.
 cp server/.env.example server/.env
 ```
 
-Defaults work out of the box for the Docker Compose setup. Set `JWT_SECRET` to a strong random value in production.
+Defaults work out of the box for the Docker Compose setup. **`JWT_SECRET` is required** — set it to any non-empty string for local development. The server will refuse to start without it.
 
 ### 3. Install dependencies
 
